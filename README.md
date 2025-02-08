@@ -1,36 +1,81 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Next.js PWA Template (Next.js 15, TailwindCSS v4.0, Serwist)
+
+This is a minimal template for creating a Progressive Web App (PWA) using Next.js. The template includes only the essential configurations to make PWA work. Feel free to clone this repository and use it for your personal projects.
+
+[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https%3A%2F%2Fgithub.com%2Fdamnitjoshua%2Fnextjs-pwa)
+
+## Features
+
+- **Next.js 15**: The latest version of NextJS for building modern web applications.
+- **TailwindCSS v4.0**: Utility-first CSS framework for rapid UI development.
+- **Serwist**: A Swiss Army knife for service workers.
 
 ## Getting Started
 
-First, run the development server:
+### Prerequisites
 
+Make sure you have Node.js and npm (or yarn) installed on your machine.
+
+### Installation
+
+1. Clone the repository:
+   ```bash
+   git clone https://github.com/your-username/nextjs-pwa-template.git
+   ```
+
+2. Navigate to the project directory:
+   ```bash
+   cd nextjs-pwa-template
+   ```
+
+3. Install the dependencies:
+   ```bash
+   npm install
+   # or
+   yarn install
+   ```
+
+### Development
+
+To start the development server, run:
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+next dev --experimental-https
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Open [https://localhost:3000](http://localhost:3000) in your browser to see the result.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+### Building for Production
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+To build the project for production, run:
+```bash
+npm run build
+# or
+yarn build
+```
 
-## Learn More
+To start the production server, run:
+```bash
+npm start
+# or
+yarn start
+```
 
-To learn more about Next.js, take a look at the following resources:
+## PWA Features
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+This template includes the necessary configurations to enable PWA features such as:
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+- Service Worker for offline support
+- Web App Manifest for adding to home screen
+- Basic caching strategies
 
-## Deploy on Vercel
+## Contributing
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+If you encounter any issues or have suggestions for improvement, please report them in the [issues tab](https://github.com/damnitjoshua/nextjs-pwa/issues). Your support is appreciated!
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+## License
+
+This project is licensed under the MIT License.
+
+## Acknowledgments
+
+- Thanks to the Next.js, Serwist and TailwindCSS communities for their awesome tools and documentation.
