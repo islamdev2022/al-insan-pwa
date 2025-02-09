@@ -20,7 +20,7 @@ Make sure you have Node.js and npm (or yarn) installed on your machine.
 
 1. Clone the repository:
    ```bash
-   git clone https://github.com/your-username/nextjs-pwa-template.git
+   git clone git@github.com:damnitjoshua/nextjs-pwa.git
    ```
 
 2. Navigate to the project directory:
