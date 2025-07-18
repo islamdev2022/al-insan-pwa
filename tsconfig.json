@@ -33,6 +33,6 @@
       "@serwist/next/typings"
     ],
   },
-  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts", "next.config.mjs"],
+  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts", "next.config.mjs", "public/sw.js"],
   "exclude": ["node_modules", "public/sw.js"]
 }

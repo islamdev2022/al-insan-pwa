@@ -1,107 +1,99 @@
-import type { Metadata, Viewport } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
-import "./globals.css";
+import type React from "react"
+import type { Metadata, Viewport } from "next"
+import { Inter } from "next/font/google"
+import "./globals.css"
+import { OfflineIndicator } from "@/components/offline-indicator"
+import { PWAInstallPrompt } from "@/components/pwa-install-prompt"
+import { CacheWarmer } from "@/components/cache-warmer"
 
-const geistSans = Geist({
-  variable: "--font-geist-sans",
-  subsets: ["latin"],
-});
-
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
-  subsets: ["latin"],
-});
-
-const APP_NAME = "Next.js PWA";
-const APP_DEFAULT_TITLE = "Next.js PWA Starter Template";
-const APP_TITLE_TEMPLATE = "%s - Next.js PWA";
-const APP_DESCRIPTION = "This is a minimal template for creating a Progressive Web App (PWA) using Next.js 15, TailwindCSS v4.0 and Serwist.";
+const inter = Inter({ subsets: ["latin"] })
 
 export const metadata: Metadata = {
-  applicationName: APP_NAME,
-  title: {
-    default: APP_DEFAULT_TITLE,
-    template: APP_TITLE_TEMPLATE,
-  },
-  description: APP_DESCRIPTION,
-  robots: {
-    index: true,
-    follow: true,
-    nocache: true,
-    googleBot: {
-      index: true,
-      follow: true,
-      noimageindex: true,
-      "max-video-preview": -1,
-      "max-image-preview": "large",
-      "max-snippet": -1,
-    },
-  },
-  keywords: [
-    "Nextjs PWA",
-    "Nextjs 15 PWA",
-    "Nextjs 15 PWA Template",
-    "Minimal PWA Template Next.js 15",
-    "Tailwind CSS PWA Template Next.js 15",
-    "Serwist PWA Template Next.js 15",
-    "Next.js 15 PWA Boilerplate",
-    "Create PWA with Next.js 15",
-    "Fast Next.js 15 PWA",
-    "Offline Next.js 15 PWA",
-    "Lightweight Next.js 15 PWA Template",
-    "Next.js 15 PWA Starter",
-    "Minimal Next.js 15 Tailwind CSS PWA",
-    "Next.js 15 Serwist Tailwind PWA Template",
-    "Best Next.js 15 PWA Template",
-    "Easy Next.js 15 PWA Setup",
-    "Next.js 15 PWA GitHub",
-    "Free Next.js 15 PWA Template",
-    "Open Source Next.js 15 PWA"
-  ],
+  title: "My PWA App",
+  description: "A Progressive Web App built with Next.js",
+  manifest: "/manifest.json",
   appleWebApp: {
     capable: true,
     statusBarStyle: "default",
-    title: APP_DEFAULT_TITLE,
-    // startUpImage: [],
+    title: "My PWA App",
   },
-  formatDetection: {
-    telephone: false,
-  },
-  openGraph: {
-    type: "website",
-    siteName: APP_NAME,
-    title: {
-      default: APP_DEFAULT_TITLE,
-      template: APP_TITLE_TEMPLATE,
-    },
-    description: APP_DESCRIPTION,
-  },
-  twitter: {
-    card: "summary",
-    title: {
-      default: APP_DEFAULT_TITLE,
-      template: APP_TITLE_TEMPLATE,
-    },
-    description: APP_DESCRIPTION,
-  },
-};
+}
 
 export const viewport: Viewport = {
-  themeColor: "#FFFFFF",
-};
+  themeColor: "#000000",
+  width: "device-width",
+  initialScale: 1,
+}
 
 export default function RootLayout({
   children,
-}: Readonly<{
-  children: React.ReactNode;
-}>) {
+}: {
+  children: React.ReactNode
+}) {
   return (
-    <html lang="en" dir="ltr">
-      <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
-      >
+    <html lang="en">
+      <head>
+        <link rel="apple-touch-icon" href="/icons/icon-192x192.png" />
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `
+              // Aggressive service worker registration for mobile
+              if ('serviceWorker' in navigator) {
+                // Register immediately
+                navigator.serviceWorker.register('/sw.js', { 
+                  scope: '/',
+                  updateViaCache: 'none'
+                })
+                .then(function(registration) {
+                  console.log('[Main] SW registered:', registration.scope);
+                  
+                  // Handle updates
+                  registration.addEventListener('updatefound', function() {
+                    const newWorker = registration.installing;
+                    if (newWorker) {
+                      newWorker.addEventListener('statechange', function() {
+                        if (newWorker.state === 'installed') {
+                          if (navigator.serviceWorker.controller) {
+                            // New version available
+                            console.log('[Main] New SW version available');
+                            newWorker.postMessage({type: 'SKIP_WAITING'});
+                            window.location.reload();
+                          } else {
+                            // First time install
+                            console.log('[Main] SW installed for first time');
+                          }
+                        }
+                      });
+                    }
+                  });
+                  
+                  // Check for updates every 30 seconds when online
+                  setInterval(function() {
+                    if (navigator.onLine) {
+                      registration.update();
+                    }
+                  }, 30000);
+                })
+                .catch(function(error) {
+                  console.error('[Main] SW registration failed:', error);
+                });
+                
+                // Listen for controller changes
+                navigator.serviceWorker.addEventListener('controllerchange', function() {
+                  console.log('[Main] SW controller changed');
+                  window.location.reload();
+                });
+              }
+            `,
+          }}
+        />
+      </head>
+      <body className={inter.className}>
         {children}
+        <OfflineIndicator />
+        <PWAInstallPrompt />
+        <CacheWarmer />
       </body>
     </html>
-  );
+  )
 }
