@@ -1,9 +1,3 @@
-# Next.js PWA Template (Next.js 15, TailwindCSS v4.0, Serwist)
-
-This is a minimal template for creating a Progressive Web App (PWA) using Next.js. The template includes only the essential configurations to make PWA work. Feel free to clone this repository and use it for your personal projects.
-
-[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https%3A%2F%2Fgithub.com%2Fdamnitjoshua%2Fnextjs-pwa)
-
 ## Features
 
 - **Next.js 15**: The latest version of NextJS for building modern web applications.
@@ -39,7 +33,7 @@ Make sure you have Node.js and npm (or yarn) installed on your machine.
 
 To start the development server, run:
 ```bash
-next dev --experimental-https
+npm run dev
 ```
 
 Open [https://localhost:3000](http://localhost:3000) in your browser to see the result.
